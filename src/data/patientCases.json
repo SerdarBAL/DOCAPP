@@ -1,0 +1,347 @@
+{
+  "patients": [
+    {
+      "id": "C107",
+      "region": "Toraks",
+      "sliceCount": 391,
+      "meta": {
+        "manufacturer": "Siemens",
+        "age": "064Y",
+        "ctdiVol": 2.45,
+        "ssde": 3.7798443252960996
+      },
+      "groundTruth": [
+        {
+          "lesionId": 1,
+          "pixel": {
+            "r": 5.74521543289589,
+            "x": 330.0,
+            "y": 343.275830985915,
+            "z": 246.0
+          },
+          "anatomicCode": 130,
+          "anatomicLabel": "Left lung",
+          "diagnosis": "Solid, non-calcified"
+        },
+        {
+          "lesionId": 2,
+          "pixel": {
+            "r": 6.28669397406578,
+            "x": 378.0,
+            "y": 231.538087912087,
+            "z": 205.0
+          },
+          "anatomicCode": 130,
+          "anatomicLabel": "Left lung",
+          "diagnosis": "Solid, non-calcified"
+        }
+      ]
+    },
+    {
+      "id": "C124",
+      "region": "Toraks",
+      "sliceCount": 383,
+      "meta": {
+        "manufacturer": "Siemens",
+        "age": "048Y",
+        "ctdiVol": 9.04,
+        "ssde": 7.576795702620868
+      },
+      "groundTruth": [
+        {
+          "lesionId": 1,
+          "pixel": {
+            "r": 6.5192,
+            "x": 313.316395833333,
+            "y": 280.13571875,
+            "z": 242.0
+          },
+          "anatomicCode": 130,
+          "anatomicLabel": "Left lung",
+          "diagnosis": "Solid, non-calcified"
+        }
+      ]
+    },
+    {
+      "id": "C179",
+      "region": "Toraks",
+      "sliceCount": 334,
+      "meta": {
+        "manufacturer": "Siemens",
+        "age": "055Y",
+        "ctdiVol": 4.3,
+        "ssde": 5.54473521916651
+      },
+      "groundTruth": [
+        {
+          "lesionId": 1,
+          "pixel": {
+            "r": 7.5,
+            "x": 112.0,
+            "y": 275.5,
+            "z": 150.0
+          },
+          "anatomicCode": 120,
+          "anatomicLabel": "Right lung",
+          "diagnosis": "Subsolid, non-calcified (ground-glass or semisolid)"
+        },
+        {
+          "lesionId": 2,
+          "pixel": {
+            "r": 3.80789,
+            "x": 206.417788888888,
+            "y": 337.314522222222,
+            "z": 54.0
+          },
+          "anatomicCode": 120,
+          "anatomicLabel": "Right lung",
+          "diagnosis": "Solid, non-calcified"
+        },
+        {
+          "lesionId": 3,
+          "pixel": {
+            "r": 5.52268,
+            "x": 363.05409574468,
+            "y": 337.867606382978,
+            "z": 72.0
+          },
+          "anatomicCode": 130,
+          "anatomicLabel": "Left lung",
+          "diagnosis": "Solid, non-calcified"
+        },
+        {
+          "lesionId": 4,
+          "pixel": {
+            "r": 5.83095,
+            "x": 137.0,
+            "y": 339.0,
+            "z": 68.0
+          },
+          "anatomicCode": 120,
+          "anatomicLabel": "Right lung",
+          "diagnosis": "Subsolid, non-calcified (ground-glass or semisolid)"
+        },
+        {
+          "lesionId": 5,
+          "pixel": {
+            "r": 7.28011,
+            "x": 160.0,
+            "y": 311.0,
+            "z": 59.0
+          },
+          "anatomicCode": 120,
+          "anatomicLabel": "Right lung",
+          "diagnosis": "Subsolid, non-calcified (ground-glass or semisolid)"
+        },
+        {
+          "lesionId": 6,
+          "pixel": {
+            "r": 5.59017,
+            "x": 110.0,
+            "y": 298.5,
+            "z": -188.5
+          },
+          "anatomicCode": 120,
+          "anatomicLabel": "Right lung",
+          "diagnosis": "Subsolid, non-calcified (ground-glass or semisolid)"
+        },
+        {
+          "lesionId": 7,
+          "pixel": {
+            "r": 6.80074,
+            "x": 152.0,
+            "y": 308.5,
+            "z": -156.5
+          },
+          "anatomicCode": 120,
+          "anatomicLabel": "Right lung",
+          "diagnosis": "Subsolid, non-calcified (ground-glass or semisolid)"
+        }
+      ]
+    },
+    {
+      "id": "L014",
+      "region": "Abdomen",
+      "sliceCount": 154,
+      "meta": {
+        "manufacturer": "Siemens",
+        "age": "051Y",
+        "ctdiVol": 8.41,
+        "ssde": 11.934101424909988
+      },
+      "groundTruth": [
+        {
+          "lesionId": 1,
+          "pixel": {
+            "r": 5.31507,
+            "x": 111.0,
+            "y": 186.5,
+            "z": 35.0
+          },
+          "anatomicCode": 109,
+          "anatomicLabel": "Liver segment I (caudate)",
+          "diagnosisCode": 200,
+          "diagnosis": "Metastasis",
+          "completeDiagnosis": "Metastasis-Colon"
+        },
+        {
+          "lesionId": 2,
+          "pixel": {
+            "r": 7.15891,
+            "x": 195.0,
+            "y": 167.5,
+            "z": 31.0
+          },
+          "anatomicCode": 103,
+          "anatomicLabel": "Liver segment III",
+          "diagnosisCode": 200,
+          "diagnosis": "Metastasis",
+          "completeDiagnosis": "Metastasis-Colon"
+        },
+        {
+          "lesionId": 3,
+          "pixel": {
+            "r": 4.47214,
+            "x": 105.0,
+            "y": 225.0,
+            "z": 53.0
+          },
+          "anatomicCode": 106,
+          "anatomicLabel": "Liver segment VI",
+          "diagnosisCode": 200,
+          "diagnosis": "Metastasis",
+          "completeDiagnosis": "Metastasis-Colon"
+        },
+        {
+          "lesionId": 4,
+          "pixel": {
+            "r": 11.4237,
+            "x": 116.5,
+            "y": 269.5,
+            "z": 48.0
+          },
+          "anatomicCode": 107,
+          "anatomicLabel": "Liver segment VII",
+          "diagnosisCode": 202,
+          "diagnosis": "Hemangioma",
+          "completeDiagnosis": "Hemangioma"
+        }
+      ]
+    },
+    {
+      "id": "L241",
+      "region": "Abdomen",
+      "sliceCount": 155,
+      "meta": {
+        "manufacturer": "Siemens",
+        "age": "061Y",
+        "ctdiVol": 13.71,
+        "ssde": 14.463042799614723
+      },
+      "groundTruth": [
+        {
+          "lesionId": 1,
+          "pixel": {
+            "r": 12.7475,
+            "x": 199.5,
+            "y": 269.5,
+            "z": 15.0
+          },
+          "anatomicCode": 105,
+          "anatomicLabel": "Liver segment V",
+          "diagnosisCode": 200,
+          "diagnosis": "Metastasis",
+          "completeDiagnosis": "Metastasis-Cholangiocarcinoma"
+        },
+        {
+          "lesionId": 2,
+          "pixel": {
+            "r": 13.61,
+            "x": 93.22,
+            "y": 286.53,
+            "z": 29.0
+          },
+          "anatomicCode": 105,
+          "anatomicLabel": "Liver segment V",
+          "diagnosisCode": 200,
+          "diagnosis": "Metastasis",
+          "completeDiagnosis": "Metastasis-Cholangiocarcinoma"
+        }
+      ]
+    }
+  ],
+  "vocab": {
+    "chest": {
+      "anatomicLocation": [
+        {
+          "value": "120",
+          "label": "120 - Sağ akciğer"
+        },
+        {
+          "value": "130",
+          "label": "130 - Sol akciğer"
+        }
+      ],
+      "diagnosis": [
+        "Solid, non-kalsifiye",
+        "Subsolid, non-kalsifiye (buzlu cam veya yarı-solid)",
+        "Diğer benign (örn. intrapulmoner lenf nodu)",
+        "Benign kalsifikasyon"
+      ]
+    },
+    "abdomen": {
+      "anatomicLocation": [
+        {
+          "value": "102",
+          "label": "102 - Karaciğer segment II"
+        },
+        {
+          "value": "103",
+          "label": "103 - Karaciğer segment III"
+        },
+        {
+          "value": "104",
+          "label": "104 - Karaciğer segment IV"
+        },
+        {
+          "value": "105",
+          "label": "105 - Karaciğer segment V"
+        },
+        {
+          "value": "106",
+          "label": "106 - Karaciğer segment VI"
+        },
+        {
+          "value": "107",
+          "label": "107 - Karaciğer segment VII"
+        },
+        {
+          "value": "108",
+          "label": "108 - Karaciğer segment VIII"
+        },
+        {
+          "value": "109",
+          "label": "109 - Karaciğer segment I (kaudat)"
+        }
+      ],
+      "diagnosis": [
+        {
+          "value": "200",
+          "label": "200 - Metastaz"
+        },
+        {
+          "value": "201",
+          "label": "201 - Kist"
+        },
+        {
+          "value": "202",
+          "label": "202 - Hemanjiom"
+        },
+        {
+          "value": "203",
+          "label": "203 - Perfüzyon / fokal yağlanma"
+        }
+      ]
+    }
+  }
+}

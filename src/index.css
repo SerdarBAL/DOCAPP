@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    @apply bg-slate-950 text-slate-100 antialiased overflow-hidden select-none;
+  }
+}
+
+@layer components {
+  /* PACS Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-slate-700 rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-slate-600;
+  }
+
+  /* Vertical slice scrubber pinned to right edge of CT viewer */
+  .ct-scrubber {
+    position: absolute;
+    right: 14px;
+    top: 60px;
+    bottom: 60px;
+    width: 6px;
+    writing-mode: vertical-lr;
+    direction: rtl;
+    -webkit-appearance: slider-vertical;
+    appearance: slider-vertical;
+    background: transparent;
+    z-index: 10;
+    accent-color: #22d3ee;
+    cursor: ns-resize;
+    opacity: 0.55;
+  }
+  .ct-scrubber:hover { opacity: 1; }
+  .ct-scrubber::-webkit-slider-runnable-track {
+    width: 4px;
+    background: rgba(148, 163, 184, 0.25);
+    border-radius: 3px;
+  }
+  .ct-scrubber::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #22d3ee;
+    border: 2px solid #0f172a;
+    box-shadow: 0 0 6px rgba(34, 211, 238, 0.6);
+  }
+}
