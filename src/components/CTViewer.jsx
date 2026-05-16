@@ -11,7 +11,7 @@ const CACHE_LIMIT = 60;    // hard cap on retained HTMLImageElements
  *    away hides the trace (just like a real workstation).
  *  - Modality is intentionally hidden — this is a blinded reader study.
  */
-export default function CTViewer({ caseData, marking, setMarking }) {
+export default function CTViewer({ caseData, marking, setMarking, savedLesions = [] }) {
   const { sliceUrls, sliceCount, patientId, region } = caseData;
 
   const containerRef = useRef(null);
@@ -86,10 +86,15 @@ export default function CTViewer({ caseData, marking, setMarking }) {
       ctx.drawImage(img, x, y, w, h);
     }
 
+    // Saved lesions on this slice render in a dimmer hue + index badge.
+    savedLesions.forEach((les, i) => {
+      if (les.sliceIdx === sliceIdx) drawSavedPath(ctx, les.points, i + 1);
+    });
+
     if (marking && marking.sliceIdx === sliceIdx && marking.points.length > 0) {
       drawPath(ctx, marking.points, isDrawing);
     }
-  }, [sliceIdx, marking, isDrawing, caseData.id]);
+  }, [sliceIdx, marking, isDrawing, caseData.id, savedLesions]);
 
   // Resize observer keeps the canvas crisp.
   useEffect(() => {
@@ -275,4 +280,32 @@ function drawPath(ctx, points, isDrawing) {
     ctx.strokeStyle = 'rgba(34, 211, 238, 0.4)';
     ctx.stroke();
   }
+}
+
+function drawSavedPath(ctx, points, label) {
+  if (points.length === 0) return;
+  ctx.save();
+  ctx.beginPath();
+  ctx.moveTo(points[0].x, points[0].y);
+  for (let i = 1; i < points.length; i++) ctx.lineTo(points[i].x, points[i].y);
+  if (points.length > 2) ctx.closePath();
+  ctx.strokeStyle = 'rgba(52, 211, 153, 0.85)';
+  ctx.lineWidth = 2;
+  ctx.setLineDash([]);
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  ctx.stroke();
+  // index badge near the first point
+  const bx = points[0].x;
+  const by = points[0].y - 10;
+  ctx.fillStyle = 'rgba(16, 185, 129, 0.9)';
+  ctx.beginPath();
+  ctx.arc(bx, by, 10, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillStyle = '#fff';
+  ctx.font = 'bold 11px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(String(label), bx, by);
+  ctx.restore();
 }

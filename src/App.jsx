@@ -15,9 +15,12 @@ function App() {
   const [submitting, setSubmitting] = useState(false);
   const [lastSubmitStatus, setLastSubmitStatus] = useState(null); // 'ok' | 'failed' | 'skipped' | null
 
-  // Per-case local state.
+  // Per-case local state. `marking` + `formState` are the *current draft*
+  // lesion the doctor is sketching. Completed lesions are appended to
+  // `lesions[]` via "Lezyon Ekle" — a case can carry multiple.
   const [marking, setMarking] = useState(null); // { sliceIdx, points: [{x,y}] }
   const [formState, setFormState] = useState({});
+  const [lesions, setLesions] = useState([]);   // [{ sliceIdx, points, clinicalData }]
 
   const currentCase = CASES[currentCaseIndex];
   const isStudyComplete = currentCaseIndex >= CASES.length;
@@ -28,7 +31,34 @@ function App() {
     return out;
   }, []);
 
+  const isFormComplete = () => !!(formState.location && formState.diagnosis);
+  const isDraftValid = !!(marking && marking.points.length > 5 && isFormComplete());
+
+  const handleAddLesion = () => {
+    if (!isDraftValid) return;
+    setLesions((prev) => [...prev, {
+      sliceIdx: marking.sliceIdx,
+      points: marking.points,
+      clinicalData: formState,
+    }]);
+    setMarking(null);
+    setFormState({});
+  };
+
+  const handleRemoveLesion = (idx) => {
+    setLesions((prev) => prev.filter((_, i) => i !== idx));
+  };
+
   const handleNext = async () => {
+    // Auto-include the current draft if it is fully filled out.
+    const finalLesions = isDraftValid
+      ? [...lesions, {
+          sliceIdx: marking.sliceIdx,
+          points: marking.points,
+          clinicalData: formState,
+        }]
+      : lesions;
+
     const payload = {
       readerId,
       caseId: currentCase.id,
@@ -36,8 +66,7 @@ function App() {
       region: currentCase.region,
       modality: currentCase.modality, // kept in the export, hidden from UI
       sliceCount: currentCase.sliceCount,
-      marking,
-      clinicalData: formState,
+      lesions: finalLesions,
       submittedAt: new Date().toISOString(),
     };
 
@@ -61,17 +90,13 @@ function App() {
     setResults((prev) => [...prev, { ...payload, transport: result }]);
     setMarking(null);
     setFormState({});
+    setLesions([]);
     setCurrentCaseIndex((prev) => prev + 1);
   };
 
   const handleReset = () => setMarking(null);
 
-  const isFormComplete = () => {
-    if (!formState.location || !formState.diagnosis) return false;
-    return true;
-  };
-
-  const canProceed = marking && marking.points.length > 5 && isFormComplete();
+  const canProceed = lesions.length > 0 || isDraftValid;
 
   if (!readerStarted) {
     return <ReaderGate readerId={readerId} setReaderId={setReaderId} onStart={() => setReaderStarted(true)} caseCount={CASES.length} regionCounts={regionCounts} />;
@@ -90,6 +115,9 @@ function App() {
             patientId={currentCase.patientId}
             readerId={readerId}
             onReset={handleReset}
+            onAddLesion={handleAddLesion}
+            canAddLesion={isDraftValid}
+            lesionsCount={lesions.length}
             onNext={handleNext}
             canProceed={canProceed && !submitting}
             submitting={submitting}
@@ -101,12 +129,15 @@ function App() {
               caseData={currentCase}
               marking={marking}
               setMarking={setMarking}
+              savedLesions={lesions}
             />
             <ClinicalForm
               region={currentCase.region}
               formState={formState}
               setFormState={setFormState}
               isMarked={marking && marking.points.length > 5}
+              lesions={lesions}
+              onRemoveLesion={handleRemoveLesion}
             />
           </main>
         </>
@@ -125,10 +156,11 @@ function ReaderGate({ readerId, setReaderId, onStart, caseCount, regionCounts })
         <h1 className="text-2xl font-bold mb-2">Dual-UNet LDCT Radyolog Çalışması</h1>
         <p className="text-sm text-slate-400 mb-6 leading-relaxed">
           Toplam <strong>{caseCount}</strong> kaydırılabilir BT serisi
-          değerlendireceksiniz ({summary}). Her olguda lezyona kadar
-          kaydırın, sınırını çizin ve klinik formu doldurun. Her serinin
-          ediniminde kullanılan kaynak (düşük doz, model tahmini, tam doz)
-          körlenmiştir.
+          değerlendireceksiniz ({summary}). Her olguda gördüğünüz <strong>her
+          lezyon</strong> için sınırı çizin, formu doldurun ve "Lezyon
+          Ekle"ye basın — aynı olguda birden çok lezyon kaydedebilirsiniz.
+          Her serinin ediniminde kullanılan kaynak (düşük doz, model tahmini,
+          tam doz) körlenmiştir.
         </p>
         <label className="text-sm font-semibold text-slate-300">Radyolog kimliği veya baş harfleri</label>
         <input

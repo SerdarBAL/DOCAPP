@@ -1,11 +1,12 @@
 import React from 'react';
-import { ClipboardList, AlertCircle } from 'lucide-react';
+import { ClipboardList, AlertCircle, Trash2, Target } from 'lucide-react';
 import { VOCAB } from '../data/mockCases';
 
-export default function ClinicalForm({ region, formState, setFormState, isMarked }) {
+export default function ClinicalForm({ region, formState, setFormState, isMarked, lesions = [], onRemoveLesion }) {
   const handle = (field, value) => setFormState((prev) => ({ ...prev, [field]: value }));
 
   const isFormComplete = () => !!(formState.location && formState.diagnosis);
+  const draftNumber = lesions.length + 1;
 
   return (
     <section className="w-full md:w-[32%] lg:w-[28%] h-full flex flex-col bg-slate-900 border-l border-slate-800">
@@ -14,7 +15,33 @@ export default function ClinicalForm({ region, formState, setFormState, isMarked
           <ClipboardList size={18} className="text-cyan-400" />
         </div>
         <h2 className="text-base font-bold text-slate-100 tracking-tight">Klinik Değerlendirme</h2>
+        <span className="ml-auto text-[10px] font-bold tracking-widest text-cyan-300 uppercase bg-cyan-950/30 border border-cyan-800/40 px-2 py-0.5 rounded-full">
+          Lezyon {draftNumber}
+        </span>
       </div>
+
+      {lesions.length > 0 && (
+        <div className="px-5 py-3 border-b border-slate-800/80 bg-slate-900/40 flex flex-col gap-1.5">
+          <p className="text-[11px] font-semibold uppercase tracking-wider text-emerald-300/80 flex items-center gap-1.5 mb-1">
+            <Target size={12} /> Bu olguda kaydedilen lezyonlar
+          </p>
+          {lesions.map((les, i) => (
+            <div key={i} className="flex items-center gap-2 text-xs bg-emerald-950/20 border border-emerald-900/40 rounded px-2 py-1.5">
+              <span className="font-mono font-bold text-emerald-300">#{i + 1}</span>
+              <span className="text-slate-300 truncate flex-1">
+                Kesit {les.sliceIdx + 1} · {les.clinicalData?.diagnosis || '—'}
+              </span>
+              <button
+                onClick={() => onRemoveLesion && onRemoveLesion(i)}
+                className="p-1 rounded text-slate-400 hover:text-rose-300 hover:bg-rose-950/30"
+                title="Lezyonu sil"
+              >
+                <Trash2 size={13} />
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
 
       <div className="flex-1 overflow-y-auto p-6 flex flex-col gap-6">
         {region === 'Toraks' && (
@@ -117,11 +144,12 @@ export default function ClinicalForm({ region, formState, setFormState, isMarked
         )}
       </div>
 
-      {(!isFormComplete() || !isMarked) && (
+      {(!isFormComplete() || !isMarked) && lesions.length === 0 && (
         <div className="p-4 bg-rose-500/10 border-t border-rose-500/20 flex items-start gap-3">
           <AlertCircle size={18} className="text-rose-400 shrink-0 mt-0.5" />
           <p className="text-xs font-medium text-rose-300/90 leading-relaxed">
             Devam etmek için BT görüntüsünde lezyonun sınırını çizin <strong>ve</strong> zorunlu alanları doldurun.
+            Birden çok lezyon için <strong>Lezyon Ekle</strong>'ye basın.
           </p>
         </div>
       )}

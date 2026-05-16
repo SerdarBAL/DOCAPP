@@ -1,5 +1,5 @@
 import React from 'react';
-import { RefreshCcw, ArrowRight, Dna, UserRound, Cloud, CloudOff, Loader2, CheckCircle2, AlertTriangle } from 'lucide-react';
+import { RefreshCcw, ArrowRight, Dna, UserRound, Cloud, CloudOff, Loader2, CheckCircle2, AlertTriangle, PlusCircle, Target } from 'lucide-react';
 
 export default function TopBar({
   currentCase,
@@ -8,6 +8,9 @@ export default function TopBar({
   patientId,
   readerId,
   onReset,
+  onAddLesion,
+  canAddLesion,
+  lesionsCount,
   onNext,
   canProceed,
   submitting,
@@ -56,13 +59,31 @@ export default function TopBar({
             <span className="font-mono">{readerId}</span>
           </div>
         )}
+        {lesionsCount > 0 && (
+          <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-950/30 border border-emerald-800/60 text-xs font-semibold text-emerald-300">
+            <Target size={13} />
+            <span>{lesionsCount} lezyon kaydedildi</span>
+          </div>
+        )}
+
         <button
           onClick={onReset}
           className="flex items-center gap-2 px-4 py-2 bg-slate-800 border border-slate-700 rounded-md text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-700 hover:border-slate-600 transition-colors"
-          title="Lezyon çizimini sil"
+          title="Aktif çizimi sil"
         >
           <RefreshCcw size={16} />
           <span>Çizimi Sıfırla</span>
+        </button>
+
+        <button
+          onClick={onAddLesion}
+          disabled={!canAddLesion}
+          title={canAddLesion ? 'Mevcut çizim + formu lezyon olarak kaydet, yenisini eklemeye başla' : 'Önce lezyon sınırını çizin ve zorunlu alanları doldurun'}
+          className="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed
+                     bg-emerald-700/80 hover:bg-emerald-600 border border-emerald-600/70 text-white"
+        >
+          <PlusCircle size={16} />
+          <span>Lezyon Ekle</span>
         </button>
 
         <button
